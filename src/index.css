@@ -1,0 +1,17 @@
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: FirstFont;
+  src: url(../src/assets/Fonts/IbarraRealNova-VariableFont_wght.ttf);
+}
+@font-face {
+  font-family: Inder;
+  src: url(../src/assets/Fonts/Inder-Regular.ttf);
+}
+@font-face {
+  font-family: Font3;
+  src: url(../src/assets/Fonts/SpaceGrotesk-VariableFont_wght.ttf);
+}

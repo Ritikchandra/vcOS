@@ -1,0 +1,38 @@
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    height: 8dvh;
+}
+.logoContainer{
+    font-family: FirstFont;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5%;
+  font-size: 2rem;
+  margin: 1rem;
+}
+.greenBgLogo{
+    background-image: url(/src/assets/bg.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  color: white;
+  width: 40px;
+  text-align: center;
+}
+.profileContainer{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem;
+}
+.avatarContainer>img{
+    width: 40px;
+  height: auto;
+}
+.profileName{
+    font-family: Inder;
+    color: #000000B2;
+}
