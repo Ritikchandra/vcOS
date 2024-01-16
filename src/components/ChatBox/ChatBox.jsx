@@ -10,40 +10,46 @@ import block from "../../assets/block.png"
     const ChatBox = ({ isSearched, onClearChat, onSearchIconClick }) => {
         const [userInput, setUserInput] = useState('');
         const [responseText, setResponseText] = useState('');
-        const [isModalOpen, setModalOpen] = useState(true);
+        const [isModalOpen, setModalOpen] = useState(false);
+        const [question, setQuestion] = useState('');
+        const [stopped, setStopped] = useState(false);
         const handleInputChange = (e) => {
             setUserInput(e.target.value);
+            // setQuestion(e.target.value);
           };
           const handleSearch = async () => {
-            const apiKey = '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';
-            const prompt = userInput;
-        
             try {
-              const response = await fetch('https://api.openai.com/v1/models/gpt-3.5-turbo-instruct', {
+              const response = await fetch('http://localhost:3000/addChat', {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${apiKey}`,
-                },
+                // headers: {
+                //   'Content-Type': 'application/json',
+                // },
                 body: JSON.stringify({
-                  prompt,
-                  max_tokens: 100,
+                  "user_id": "1",
+                  "sector_id": "1",
+                  "session_id": "2",
+                  "prompt": "yo1",
+                  "response": "yo1!",
+                  "timestamp": ""
                 }),
               });
-        
+          
               const responseData = await response.json();
-              console.log('Response from GPT-3:', responseData);
-    const choices = responseData.choices || [];
-    setResponseText(choices.length > 0 ? choices[0]?.text : 'No response from GPT-3');
-  } catch (error) {
-    console.error('Error fetching data from GPT-3:', error);
-    setResponseText('Error fetching response from GPT-3');
-  }
+              console.log('Response from backend:', responseData);
+          
+              const choices = responseData.choices || [];
+              setResponseText(choices.length > 0 ? choices[0]?.text : 'No response from the backend');
+              setQuestion(userInput);
+            } catch (error) {
+              console.error('Error fetching data from backend:', error);
+              setResponseText('Error fetching response from the backend');
+            }
           };
-        
+          
           const handleSearchIconClick = () => {
             handleSearch();
             onSearchIconClick();
+            setUserInput('');
           };
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
@@ -52,14 +58,29 @@ import block from "../../assets/block.png"
   const handleClearChat = () => {
     setModalOpen(true); // Open the modal when "Clear Chat" is clicked
   };
-
+  const onStopBtn = () => {
+    setStopped(true);
+    setUserInput('');
+  }
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchIconClick();
+    }
+  };
   const handleModalCloseYes = () => {
+    setUserInput('');
     setModalOpen(false); // Close the modal
     onClearChat(); // Perform the clear chat action
   };
   const handleModalCloseNo = () => {
     setModalOpen(false);
   };
+    const handleCardClick = (text) => {
+      setUserInput(text);
+      setQuestion(text);
+      handleSearchIconClick();
+    };
+
   return (
     <>
         <div className={styles.wrapper}>
@@ -92,16 +113,16 @@ import block from "../../assets/block.png"
          </div>
          <div className={styles.inputContainer}>
             <div className={styles.suggestionCards}>
-                <div className={styles.card}>
-                    <span>{userInput}</span>
-                </div>
-                <div className={styles.card}>
+                <div className={styles.card}onClick={() => handleCardClick("How do I get started with Llama Index?")}>
                     <span>How do I get started with Llama Index?</span>
                 </div>
-                <div className={styles.card}>
+                <div className={styles.card}onClick={() => handleCardClick("How do I get started with Llama Index?")}>
                     <span>How do I get started with Llama Index?</span>
                 </div>
-                <div className={styles.card}>
+                <div className={styles.card}onClick={() => handleCardClick("How do I get started with Llama Index?")}>
+                    <span>How do I get started with Llama Index?</span>
+                </div>
+                <div className={styles.card}onClick={() => handleCardClick("How do I get started with Llama Index?")}>
                     <span>How do I get started with Llama Index?</span>
                 </div>
             </div>
@@ -112,7 +133,7 @@ import block from "../../assets/block.png"
             <div className={styles.searchedWrapper}>
             <div className={styles.questionWrapper}>
                 <img src={questionLogo} alt="" />
-                <span>{userInput}</span>
+                <span>{question}</span>
             </div>
             <div className={styles.responseWrapper}>
             <img src={responseLogo} alt="" />
@@ -120,7 +141,7 @@ import block from "../../assets/block.png"
             {responseText}
             </div>
             </div>
-            <div className={styles.stopBtn} onClick={onClearChat}>
+            <div className={styles.stopBtn} onClick={onStopBtn}style={{ visibility: stopped ? 'hidden' : 'visible' }}>
             <img src={block} alt="" />
             <span>Stop Generating</span>
             </div>
@@ -135,6 +156,7 @@ import block from "../../assets/block.png"
             className={styles.searchInput}
             value={userInput}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           />
               <img src={searchIcon} alt="" className={styles.searchIcon} onClick={handleSearchIconClick}/>
               </div>
@@ -147,9 +169,9 @@ import block from "../../assets/block.png"
           <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
               <p>Are you sure?</p>
-              <div>
-                <button onClick={handleModalCloseYes}>Yes</button>
-                <button onClick={handleModalCloseNo}>No</button>
+              <div className={styles.modalButtons}>
+                <div onClick={handleModalCloseYes}className={styles.modalButton}>Yes</div>
+                <div onClick={handleModalCloseNo}className={styles.modalButton}>No</div>
               </div>
             </div>
           </div>

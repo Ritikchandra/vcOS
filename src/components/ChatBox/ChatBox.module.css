@@ -112,6 +112,9 @@
     width: 250px;
     height: auto;
 }
+.card:hover{
+    cursor: pointer;
+}
 .inputWrapper{
     width: 60%;
   display: flex;
@@ -171,6 +174,10 @@
     margin-left: 1rem;
     width: 20px;
     height: auto;
+
+}
+.searchIcon:hover{
+    cursor: pointer;
 }
 .questionWrapper>span{
     color: #000000CC;
@@ -226,4 +233,54 @@
     left: 0;
     background: linear-gradient(138.52deg, rgba(231, 200, 255, 0.86) 31.61%, rgba(173, 255, 214, 0.73) 105.38%);
     ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modalContent{
+    background: #FFFFFF4D;
+  width: 50%;
+  height: 50%;
+  border-radius: 50px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Font3;
+}
+.modalContent>p{
+    font-size: 3rem;
+}
+.modalButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.modalButton{
+    display: inline-block;
+  width: 100px;
+  text-align: center;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+}
+.modalButton:nth-child(1){
+    background-color: black;
+    color: white;
+}
+.modalButton:nth-child(2){
+    background-color: white;
+    color: black;
+}
+.modalButton:nth-child(1):hover{
+    cursor: pointer;
+    background-color: #000000c7;
+}
+.modalButton:nth-child(2):hover{
+    cursor: pointer;
+    background-color: #c6c6c6;
 }
